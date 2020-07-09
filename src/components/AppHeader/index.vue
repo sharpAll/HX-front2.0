@@ -1,12 +1,16 @@
 <template>
   <div class="g-nv f-usn">
     <div class="g-in">
-        <ul class="m-nav" id="nav">
-            <router-link to="/leaflet" class="first" active-class="crt" tag="li"><a>leaflet</a><i></i></router-link>
-            <router-link to="/wireless" active-class="crt" tag="li"><a>wireless</a><i></i></router-link>
-        </ul>
+      <ul class="m-nav" id="nav">
+        <router-link to="/leaflet" class="first" active-class="crt" tag="li"
+          ><a>leaflet</a><i></i
+        ></router-link>
+        <router-link to="/wireless" active-class="crt" tag="li"
+          ><a>wireless</a><i></i
+        ></router-link>
+      </ul>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -18,9 +22,7 @@ export default {
   components: {},
 
   methods: {}
-}
+};
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

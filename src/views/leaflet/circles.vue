@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="u-ttb2">arcgis - 地理纬度与固定纬度</h2>
+    <h2 class="u-ttb2">地理纬度与固定像素</h2>
     <div class="u-line">
       <span class="linea"></span>
       <span class="lineb"></span>
@@ -8,38 +8,12 @@
     <dl>
       <dt>样例</dt>
       <div class="gis-map" id="map"></div>
-      <dt>引用模块介绍</dt>
-      <dd>
-        <p>"esri/layers/ArcGISTiledMapServiceLayer"-》缓存地图资源底图</p>
-        <p>"esri/layers/ArcGISDynamicMapServiceLayer"-》服务器动态生成底图（在js中的map设置可能会被覆盖）</p>
-        <p>"esri/graphic"-》图层元素</p>
-        <p>"esri/layers/GraphicsLayer"-》graphic元素的集合，可用于监听graphic事件</p>
-        <p>"esri/geometry/Circle"-》圆形对像</p>
-        <p>"esri/symbols/SimpleFillSymbol"-》结合Circle对象生成地理尺寸图形</p>
-        <p>"esri/geometry/Point"-》点对像</p>
-        <p>"esri/symbols/SimpleMarkerSymbol"-》结合Point对象生成绝对尺寸图形</p>
-        <p>"esri/symbols/TextSymbol"-》文本元素（添加esri.symbol.MultiLineTextSymbol.js包增加换行功能）</p>
-        <p>"dojo"-》为JavaScript工具集合，可选</p>
-      </dd>
       <dt>核心代码</dt>
       <dd>
         <pre>
           <code class="javascript hljs">
-            //生成圆形区域(固定长度)
-            var position=new Point([120.249, 30.054]);
-            var circleMarker = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 90, 0, new Color([151, 156, 252,0.8]));
-            var graphic = new Graphic(position,circleMarker,{'name':'固定的长度','data-id':'1'});
-            circleLayer.add(graphic);
-            //生成圆形区域(地图长度)
-             var circleSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, 0,new Color([240, 194, 110,0.8]));
-             //geodesic设置为测地线的圆 否则为椭圆形
-             var circle = new Circle({
-                 center: [120.549, 30.054],
-                 radius: 5000,
-                 geodesic: true
-             });
-             var graphic = new Graphic(circle, circleSymbol);
-			        circleLayer.add(graphic);
+      L.circle([39.8,98.27], {radius: 15000,stroke:false,fillOpacity:0.4,fillColor:"#979cfc"}).addTo(this.map);
+      L.circleMarker([39.8,98.67], {radius: 100,stroke:false,fillOpacity:0.4,fillColor:"#97fcd5"}).addTo(this.map);
           </code>
         </pre>
       </dd>
@@ -49,18 +23,62 @@
 
 <script>
 import hljs from "highlight.js";
+import L from "leaflet";
+import config from "@/utils/leafletConfig.js";
+import "leaflet/dist/leaflet.css";
 export default {
   data() {
-    return {};
+    return {
+      map: null,
+      baseLayers: {
+        geoq: null,
+        amap: null
+      },
+      overLayers: {
+        circles: null
+      }
+    };
   },
   mounted() {
     document.querySelectorAll("pre code").forEach(block => {
       hljs.highlightBlock(block);
     });
+    this.initMap();
   },
   components: {},
 
-  methods: {}
+  methods: {
+    initMap() {
+      this.map = L.map("map", {
+        minZoom: 1,
+        maxZoom: 18,
+        center: { lat: 39.8, lng: 98.27 },
+        zoom: 10,
+        zoomControl: false,
+        attributionControl: false
+      });
+      this.baseLayers.geoq = L.tileLayer(config.geoqUrl);
+      this.baseLayers.amap = L.tileLayer(config.amapUrl);
+      this.map.addLayer(this.baseLayers.geoq);
+      this.drawCircles();
+    },
+    drawCircles() {
+      this.overLayers.circles = L.layerGroup();
+      L.circle([39.8, 98.27], {
+        radius: 15000,
+        stroke: false,
+        fillOpacity: 0.4,
+        fillColor: "#979cfc"
+      }).addTo(this.overLayers.circles);
+      L.circleMarker([39.8, 98.67], {
+        radius: 100,
+        stroke: false,
+        fillOpacity: 0.4,
+        fillColor: "#97fcd5"
+      }).addTo(this.overLayers.circles);
+      this.map.addLayer(this.overLayers.circles);
+    }
+  }
 };
 </script>
 
