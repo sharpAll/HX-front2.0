@@ -8,6 +8,15 @@
         <router-link active-class="crt" tag="li" to="/leaflet/picpoints">
           <a>添加标记属性</a>
         </router-link>
+        <router-link active-class="crt" tag="li" to="/leaflet/templateinfo">
+          <a>悬浮与弹出信息框</a>
+        </router-link>
+        <router-link active-class="crt" tag="li" to="/leaflet/routelevel">
+          <a>轨迹电平模型</a>
+        </router-link>
+        <router-link active-class="crt" tag="li" to="/leaflet/routeline">
+          <a>路测轨迹模型</a>
+        </router-link>
       </ul>
     </div>
   </div>
