@@ -8,6 +8,7 @@ import LeafletPicpoints from "@/views/leaflet/picpoints.vue";
 import LeafletTemplateinfo from "@/views/leaflet/templateinfo.vue";
 import LeafletRoutelevel from "@/views/leaflet/routelevel.vue";
 import LeafletRouteline from "@/views/leaflet/routeline.vue";
+import LeafletFiringline from "@/views/leaflet/firingline.vue";
 
 import Wireless from "@/views/wireless";
 Vue.use(VueRouter);
@@ -53,6 +54,12 @@ const routes = [
             component: LeafletRouteline,
             name: "/leaflet/routeline",
             meta: { title: "路测轨迹模型" }
+          },
+          {
+            path: "/leaflet/firingline",
+            component: LeafletFiringline,
+            name: "/leaflet/firingline",
+            meta: { title: "射向线模型" }
           }
         ]
       },

@@ -17,6 +17,9 @@
         <router-link active-class="crt" tag="li" to="/leaflet/routeline">
           <a>路测轨迹模型</a>
         </router-link>
+        <router-link active-class="crt" tag="li" to="/leaflet/firingline">
+          <a>射向线模型</a>
+        </router-link>
       </ul>
     </div>
   </div>
