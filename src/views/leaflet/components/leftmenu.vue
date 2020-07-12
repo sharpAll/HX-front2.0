@@ -20,6 +20,12 @@
         <router-link active-class="crt" tag="li" to="/leaflet/firingline">
           <a>射向线模型</a>
         </router-link>
+        <router-link active-class="crt" tag="li" to="/leaflet/zoom">
+          <a>监听图层变化</a>
+        </router-link>
+        <router-link active-class="crt" tag="li" to="/leaflet/heatmap">
+          <a>热力图</a>
+        </router-link>
       </ul>
     </div>
   </div>

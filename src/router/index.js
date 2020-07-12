@@ -9,6 +9,8 @@ import LeafletTemplateinfo from "@/views/leaflet/templateinfo.vue";
 import LeafletRoutelevel from "@/views/leaflet/routelevel.vue";
 import LeafletRouteline from "@/views/leaflet/routeline.vue";
 import LeafletFiringline from "@/views/leaflet/firingline.vue";
+import LeafletZoom from "@/views/leaflet/zoom.vue";
+import LeafletHeatmap from "@/views/leaflet/heatmap.vue";
 
 import Wireless from "@/views/wireless";
 Vue.use(VueRouter);
@@ -60,6 +62,18 @@ const routes = [
             component: LeafletFiringline,
             name: "/leaflet/firingline",
             meta: { title: "射向线模型" }
+          },
+          {
+            path: "/leaflet/zoom",
+            component: LeafletZoom,
+            name: "/leaflet/zoom",
+            meta: { title: "监听图层变化" }
+          },
+          {
+            path: "/leaflet/heatmap",
+            component: LeafletHeatmap,
+            name: "/leaflet/heatmap",
+            meta: { title: "热力图" }
           }
         ]
       },

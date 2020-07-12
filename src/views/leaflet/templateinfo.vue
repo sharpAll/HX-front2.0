@@ -43,7 +43,7 @@ export default {
       overLayers: {
         picpoints: null
       },
-      txtContent: "this is content",
+      txtContent: "this is tooltip",
       popContent: "this is popup"
     };
   },

@@ -12,40 +12,26 @@
       <dd>
         <pre>
           <code class="javascript hljs">
-    drawPicPoints() {
-      this.overLayers.picpoints = L.layerGroup();
-      const pointIcon = L.icon({
-        iconUrl: require("../../assets/img/map/icon-lo.png"),
-        iconSize: [22, 27]
+    drawFiringline(fId, angle) {
+      this.overLayers.firinglines.eachLayer(layer => {
+        if (layer) {
+          if (layer.options.data.id == fId) {
+            this.overLayers.firinglines.removeLayer(layer);
+          }
+        }
       });
-      L.marker([39.8, 98.27], { icon: pointIcon, data: { id: 1 } }).addTo(
-        this.overLayers.picpoints
+      var locArray = this.positions[fId];
+      var locArray_1 = [];
+      locArray_1.push(
+        Number(locArray[0]) + Math.cos((angle * Math.PI) / 180) * this.firingLen
       );
-      L.marker([39.8, 98.57], { icon: pointIcon, data: { id: 2 } }).addTo(
-        this.overLayers.picpoints
+      locArray_1.push(
+        Number(locArray[1]) + Math.sin((angle * Math.PI) / 180) * this.firingLen
       );
-      this.map.addLayer(this.overLayers.picpoints);
-      this.overLayers.picpoints.eachLayer(layer => {
-        layer.on("click", e => {
-          alert("id:" + e.target.options.data.id);
-        });
-        layer.on("mouseover", e => {
-          e.target.setIcon(
-            L.icon({
-              iconUrl: require("../../assets/img/map/icon-lo-h.png"),
-              iconSize: [25, 31]
-            })
-          );
-        });
-        layer.on("mouseout", e => {
-          e.target.setIcon(
-            L.icon({
-              iconUrl: require("../../assets/img/map/icon-lo.png"),
-              iconSize: [22, 27]
-            })
-          );
-        });
-      });
+      L.polyline([locArray, locArray_1], {
+        color: "blue",
+        data: { id: fId }
+      }).addTo(this.overLayers.firinglines);
     }
           </code>
         </pre>
