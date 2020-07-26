@@ -11,6 +11,7 @@ import LeafletRouteline from "@/views/leaflet/routeline.vue";
 import LeafletFiringline from "@/views/leaflet/firingline.vue";
 import LeafletZoom from "@/views/leaflet/zoom.vue";
 import LeafletHeatmap from "@/views/leaflet/heatmap.vue";
+import LeafletDraw from "@/views/leaflet/draw.vue";
 
 import Wireless from "@/views/wireless";
 Vue.use(VueRouter);
@@ -74,6 +75,12 @@ const routes = [
             component: LeafletHeatmap,
             name: "/leaflet/heatmap",
             meta: { title: "热力图" }
+          },
+          {
+            path: "/leaflet/draw",
+            component: LeafletDraw,
+            name: "/leaflet/draw",
+            meta: { title: "图形绘制" }
           }
         ]
       },

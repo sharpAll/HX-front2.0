@@ -26,6 +26,9 @@
         <router-link active-class="crt" tag="li" to="/leaflet/heatmap">
           <a>热力图</a>
         </router-link>
+        <router-link active-class="crt" tag="li" to="/leaflet/draw">
+          <a>图形绘制</a>
+        </router-link>
       </ul>
     </div>
   </div>

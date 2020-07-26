@@ -113,3 +113,7 @@ a,a:hover{color:#333;}
 .gis-map .map-left-box .item-box .map-measure-tools .btn-re:hover{
     background: #0083df;
 }
+
+.m-article .gis-map ul{
+    padding-left: 0;
+}
