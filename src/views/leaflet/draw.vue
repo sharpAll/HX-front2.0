@@ -14,12 +14,14 @@
         <p>引用:</p>
         <p>import "leaflet-draw/dist/leaflet.draw.css";</p>
         <p>import "leaflet-draw/dist/leaflet.draw.js";</p>
+        <p>import localObj from "@/utils/leafletDrawLocal.js";</p>
       </dd>
       <dt>核心代码</dt>
       <dd>
         <pre>
           <code class="javascript hljs">
     drawInit() {
+      L.drawLocal = localObj;
       this.draw.layer = new L.FeatureGroup();
       this.map.addLayer(this.draw.layer);
       this.draw.control = new L.Control.Draw({
@@ -32,26 +34,29 @@
             showLength: true,
             metric: ["km", "m"]
           },
-          rectangle:{
-            showArea:true,
+          rectangle: {
+            showArea: true,
             metric: ["km", "m"]
           },
           marker: {
             icon: L.icon({
               iconUrl: require("../../assets/img/map/icon-lo.png"),
               iconSize: [22, 27],
-              iconAnchor:[11,27]
+              iconAnchor: [11, 27]
             })
           },
-          circlemarker:false
+          circlemarker: false
         }
       });
       this.map.addControl(this.draw.control);
 
       this.map.on(L.Draw.Event.CREATED, event => {
-        console.log(event)
+        console.log(event);
         var layer = event.layer;
         this.draw.layer.addLayer(layer);
+      });
+      this.map.on(L.Draw.Event.DRAWSTOP, event => {
+        console.log(event);
       });
     }
           </code>
@@ -68,6 +73,7 @@ import config from "@/utils/leafletConfig.js";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
 import "leaflet-draw/dist/leaflet.draw.js";
+import localObj from "@/utils/leafletDrawLocal.js";
 export default {
   data() {
     return {
@@ -106,6 +112,7 @@ export default {
       this.drawInit();
     },
     drawInit() {
+      L.drawLocal = localObj;
       this.draw.layer = new L.FeatureGroup();
       this.map.addLayer(this.draw.layer);
       this.draw.control = new L.Control.Draw({
@@ -113,14 +120,30 @@ export default {
           featureGroup: this.draw.layer
         },
         draw: {
+          polyline: {
+            shapeOptions: {
+              weight: 2
+            }
+          },
           polygon: {
             showArea: true,
             showLength: true,
-            metric: ["km", "m"]
+            metric: ["km", "m"],
+            shapeOptions: {
+              weight: 2
+            }
           },
           rectangle: {
             showArea: true,
-            metric: ["km", "m"]
+            metric: ["km", "m"],
+            shapeOptions: {
+              weight: 2
+            }
+          },
+          circle: {
+            shapeOptions: {
+              weight: 2
+            }
           },
           marker: {
             icon: L.icon({
