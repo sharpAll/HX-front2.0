@@ -13,6 +13,9 @@ import LeafletZoom from "@/views/leaflet/zoom.vue";
 import LeafletHeatmap from "@/views/leaflet/heatmap.vue";
 import LeafletDraw from "@/views/leaflet/draw.vue";
 
+import WirelessFscan from "@/views/wireless/fscan.vue";
+import WirelessSingle from "@/views/wireless/single.vue";
+
 import Wireless from "@/views/wireless";
 Vue.use(VueRouter);
 const routes = [
@@ -87,7 +90,22 @@ const routes = [
       {
         path: "/wireless",
         component: Wireless,
-        name: "/wireless"
+        name: "/wireless",
+        redirect: "/wireless/fscan",
+        children: [
+          {
+            path: "/wireless/fscan",
+            component: WirelessFscan,
+            name: "/wireless/fscan",
+            meta: { title: "频率电平图" }
+          },
+          {
+            path: "/wireless/single",
+            component: WirelessSingle,
+            name: "/wireless/single",
+            meta: { title: "单频电平图" }
+          }
+        ]
       }
     ]
   }
