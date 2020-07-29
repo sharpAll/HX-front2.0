@@ -15,6 +15,7 @@ import LeafletDraw from "@/views/leaflet/draw.vue";
 
 import WirelessFscan from "@/views/wireless/fscan.vue";
 import WirelessSingle from "@/views/wireless/single.vue";
+import WirelessFalls from "@/views/wireless/falls.vue";
 
 import Wireless from "@/views/wireless";
 Vue.use(VueRouter);
@@ -104,6 +105,12 @@ const routes = [
             component: WirelessSingle,
             name: "/wireless/single",
             meta: { title: "单频电平图" }
+          },
+          {
+            path: "/wireless/falls",
+            component: WirelessFalls,
+            name: "/wireless/falls",
+            meta: { title: "瀑布图" }
           }
         ]
       }

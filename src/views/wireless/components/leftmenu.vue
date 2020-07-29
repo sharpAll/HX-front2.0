@@ -8,6 +8,9 @@
         <router-link active-class="crt" tag="li" to="/wireless/single">
           <a>单频电平图</a>
         </router-link>
+        <router-link active-class="crt" tag="li" to="/wireless/falls">
+          <a>瀑布图</a>
+        </router-link>
       </ul>
     </div>
   </div>
