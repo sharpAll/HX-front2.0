@@ -129,7 +129,7 @@ export default {
             this.chart(data);
           }
         }
-      }, 1000);
+      }, 500);
     }
   }
 };

@@ -566,102 +566,272 @@ const wirelessCharts = {
       }
       return change;
     }
+  },
+  /*
+   *无委定制标准折线图
+   * startfreq起始频率,endfreq终止频率,data
+   */
+  standardLineChart(startfreq, endfreq, data) {
+    return Highcharts.chart("chart", {
+      chart: {
+        zoomType: "x"
+      },
+      title: {
+        text: "" + startfreq + "-" + endfreq + "MHz频谱占用情况"
+      },
+      credits: {
+        enabled: false
+      },
+      subtitle: {
+        text: "",
+        align: "left",
+        style: {
+          fontSize: "12px",
+          color: "#333"
+        },
+        x: 50,
+        useHTML: true
+      },
+      xAxis: [
+        {
+          categories: [0, 0, 0],
+          name: "频点",
+          lineWidth: 2,
+          lineColor: "#8a8b88"
+        }
+      ],
+      yAxis: [
+        {
+          // Primary yAxis
+          title: {
+            text: "频道占用度%",
+            rotation: 270
+          },
+          tickColor: "#4f6027",
+          tickWidth: 2,
+          tickLength: 5,
+          tickPosition: "inside",
+          tickPositions: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+          gridLineWidth: 0,
+          lineWidth: 2,
+          lineColor: "#4f6027",
+          opposite: true
+        },
+        {
+          // Secondary yAxis
+          title: {
+            text: "信号电平dBuV"
+          },
+          tickColor: "#ff2c2c",
+          tickWidth: 2,
+          tickLength: 5,
+          tickPosition: "inside",
+          tickPositions: [
+            -40,
+            -30,
+            -20,
+            -10,
+            0,
+            10,
+            20,
+            30,
+            40,
+            50,
+            60,
+            70,
+            80,
+            90,
+            100
+          ],
+          gridLineColor: "#dbdbdb",
+          gridLineWidth: "0.5",
+          gridLineDashStyle: "ShortDash",
+          lineWidth: 2,
+          lineColor: "#ff2c2c"
+        }
+      ],
+      tooltip: {
+        shared: true
+      },
+      legend: {
+        align: "center",
+        verticalAlign: "bottom",
+        backgroundColor:
+          (Highcharts.theme && Highcharts.theme.legendBackgroundColor) ||
+          "#FFFFFF"
+      },
+      series: [
+        {
+          name: "最大电平(dBμV)",
+          yAxis: 0,
+          data: data.MAXDP,
+          color: "#c5536a",
+          lineWidth: 0.5
+        },
+        {
+          name: "最小电平(dBμV)",
+          yAxis: 0,
+          data: data.MINDP,
+          color: "#504aa0",
+          lineWidth: 0.5
+        },
+        {
+          name: "平均电平(dBμV)",
+          yAxis: 0,
+          data: data.AVGDP,
+          color: "#75d574",
+          lineWidth: 0.5
+        },
+        {
+          name: "占用度(%)",
+          yAxis: 1,
+          data: data.PERCENT,
+          color: "#60615b",
+          lineWidth: 0.5
+        }
+      ]
+    });
+  },
+  YsLine(chart, fre, occuThreshold, maxdp, overOccuThreshold) {
+    return Highcharts.chart(chart, {
+      chart: {
+        zoomType: "x",
+        backgroundColor: "#fafafa",
+        resetZoomButton: {
+          position: {
+            x: 0,
+            y: -10
+          }
+        }
+      },
+      credits: {
+        enabled: false
+      },
+      title: {
+        text: null
+      },
+      legend: {
+        x: -100
+      },
+      xAxis: {
+        categories: fre,
+        tickInterval: 100
+      },
+      plotOptions: {
+        series: {
+          marker: {
+            states: {
+              hover: {
+                enabled: true
+              }
+            }
+          }
+        }
+      },
+      yAxis: [
+        {
+          // Primary yAxis
+          min: 0,
+          gridLineWidth: 0,
+          labels: {
+            style: {
+              color: "#7995ff"
+            }
+          },
+          title: {
+            text: "占用度(%)",
+            style: {
+              color: "#7995ff"
+            }
+          }
+        },
+        {
+          // Secondary yAxis
+          gridLineWidth: 0,
+          labels: {
+            style: {
+              color: "#39ff67"
+            }
+          },
+          title: {
+            text: "最大电平(dBuV)",
+            style: {
+              color: "#39ff67"
+            }
+          }
+        },
+        {
+          // Tertiary yAxis
+          min: 0,
+          allowDecimals: false,
+          gridLineWidth: 0,
+          labels: {
+            style: {
+              color: "#ff553c"
+            }
+          },
+          title: {
+            text: "超出门限次数",
+            style: {
+              color: "#ff553c"
+            }
+          },
+          opposite: true
+        }
+      ],
+      tooltip: {
+        shared: true,
+        useHTML: true,
+        headerFormat: "{point.key}MHz<br/>"
+      },
+      series: [
+        {
+          name: "占用度",
+          color: "#7995ff",
+          lineWidth: 1,
+          states: {
+            hover: {
+              lineWidth: 1
+            }
+          },
+          type: "line",
+          tooltip: {
+            valueSuffix: " %"
+          },
+          data: occuThreshold
+        },
+        {
+          name: "最大电平",
+          color: "#39ff67",
+          lineWidth: 1,
+          states: {
+            hover: {
+              lineWidth: 1
+            }
+          },
+          type: "line",
+          yAxis: 1,
+          tooltip: {
+            valueSuffix: " dBuV"
+          },
+          data: maxdp
+        },
+        {
+          name: "超出门限次数",
+          color: "#ff553c",
+          lineWidth: 1,
+          states: {
+            hover: {
+              lineWidth: 1
+            }
+          },
+          type: "line",
+          yAxis: 2,
+          data: overOccuThreshold
+        }
+      ]
+    });
   }
-  // /*
-  //  *无委定制标准折线图
-  //  * startfreq起始频率,endfreq终止频率,data
-  // */
-  // standardLineChart:function (startfreq,endfreq,data) {
-  //     var lineChart= Highcharts.chart('standardLineChart',{
-  //         chart:{
-  //             zoomType:'x'
-  //         },
-  //         title: {
-  //             text: ''+startfreq+'-'+endfreq+'MHz频谱占用情况'
-  //         },
-  //         credits:{
-  //             enabled:false
-  //         },
-  //         subtitle: {
-  //             text: '',
-  //             align:'left',
-  //             style:{
-  //                 "fontSize":"12px",
-  //                 'color':'#333'
-  //             },
-  //             x:50,
-  //             useHTML:true
-  //         },
-  //         xAxis: [{
-  //             categories:[0,0,0],
-  //             name: '频点',
-  //             lineWidth:2,
-  //             lineColor:'#8a8b88'
-  //         }],
-  //         yAxis: [{ // Primary yAxis
-  //             title: {
-  //                 text: '频道占用度%',
-  //                 rotation : 270
-  //             },
-  //             tickColor:'#4f6027',
-  //             tickWidth:2,
-  //             tickLength:5,
-  //             tickPosition:'inside',
-  //             tickPositions:[0,10,20,30,40,50,60,70,80,90,100],
-  //             gridLineWidth:0,
-  //             lineWidth:2,
-  //             lineColor:'#4f6027',
-  //             opposite: true
-  //         }, { // Secondary yAxis
-  //             title: {
-  //                 text: '信号电平dBuV'
-  //             },
-  //             tickColor:'#ff2c2c',
-  //             tickWidth:2,
-  //             tickLength:5,
-  //             tickPosition:'inside',
-  //             tickPositions:[-40,-30,-20,-10,0,10,20,30,40,50,60,70,80,90,100],
-  //             gridLineColor:'#dbdbdb',
-  //             gridLineWidth:'0.5',
-  //             gridLineDashStyle:'ShortDash',
-  //             lineWidth:2,
-  //             lineColor:'#ff2c2c'
-  //         }],
-  //         tooltip: {
-  //             shared: true
-  //         },
-  //         legend: {
-  //             align: 'center',
-  //             verticalAlign: 'bottom',
-  //             backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
-  //         },
-  //         series: [{
-  //             name: '最大电平(dBμV)',
-  //             yAxis: 0,
-  //             data: data.MAXDP,
-  //             color:'#c5536a',
-  //             lineWidth: 0.5
-  //         },{
-  //             name: '最小电平(dBμV)',
-  //             yAxis: 0,
-  //             data: data.MINDP,
-  //             color:'#504aa0',
-  //             lineWidth: 0.5
-  //         },{
-  //             name: '平均电平(dBμV)',
-  //             yAxis: 0,
-  //             data: data.AVGDP,
-  //             color:'#75d574',
-  //             lineWidth: 0.5
-  //         },{
-  //             name: '占用度(%)',
-  //             yAxis: 1,
-  //             data: data.PERCENT,
-  //             color:'#60615b',
-  //             lineWidth: 0.5
-  //         }]
-  //     });
-  // },
   // //基于highchart的大数据量点图 需额外引入boost.js & boost-canvas.js（已关闭所有特效）
   // bigDataPointChar:function (id) {
   //     if (!Highcharts.Series.prototype.renderCanvas) {
@@ -769,134 +939,5 @@ const wirelessCharts = {
   //     });
   //     $dom.trigger('scroll');
   // },
-  // YsLine:function (fre,occuThreshold,maxdp,overOccuThreshold) {
-  //     return Highcharts.chart('ysLineChart', {
-  //         chart: {
-  //             zoomType: 'x',
-  //             backgroundColor:'#fafafa',
-  //             resetZoomButton:{
-  //                 position:{
-  //                     x:0,
-  //                     y:-10
-  //                 }
-  //             }
-  //         },
-  //         credits:{
-  //             enabled:false
-  //         },
-  //         title: {
-  //             text: null
-  //         },
-  //         legend:{
-  //             x:-100
-  //         },
-  //         xAxis: {
-  //             categories: fre,
-  //             tickInterval:100
-  //         },
-  //         plotOptions: {
-  //             series: {
-  //                 marker: {
-  //                     states: {
-  //                         hover: {
-  //                             enabled: true
-  //                         }
-  //                     }
-  //                 }
-  //             }
-  //         },
-  //         yAxis: [{ // Primary yAxis
-  //             min: 0,
-  //             gridLineWidth: 0,
-  //             labels: {
-  //                 style: {
-  //                     color: '#7995ff'
-  //                 }
-  //             },
-  //             title: {
-  //                 text: '占用度(%)',
-  //                 style: {
-  //                     color: '#7995ff'
-  //                 }
-  //             }
-  //         }, { // Secondary yAxis
-  //             gridLineWidth: 0,
-  //             labels: {
-  //                 style: {
-  //                     color: '#39ff67'
-  //                 }
-  //             },
-  //             title: {
-  //                 text: '最大电平(dBuV)',
-  //                 style: {
-  //                     color: '#39ff67'
-  //                 }
-  //             }
-  //         }, { // Tertiary yAxis
-  //             min: 0,
-  //             allowDecimals:false,
-  //             gridLineWidth: 0,
-  //             labels: {
-  //                 style: {
-  //                     color: '#ff553c'
-  //                 }
-  //             },
-  //             title: {
-  //                 text: '超出门限次数',
-  //                 style: {
-  //                     color: '#ff553c'
-  //                 }
-  //             },
-  //             opposite: true
-  //         }],
-  //         tooltip: {
-  //             shared: true,
-  //             useHTML: true,
-  //             headerFormat: '{point.key}MHz<br/>'
-  //         },
-  //         series: [{
-  //             name: '占用度',
-  //             color:'#7995ff',
-  //             lineWidth:1,
-  //             states:{
-  //                 hover:{
-  //                     lineWidth:1
-  //                 }
-  //             },
-  //             type: 'line',
-  //             tooltip: {
-  //                 valueSuffix: ' %'
-  //             },
-  //             data: occuThreshold
-  //         }, {
-  //             name: '最大电平',
-  //             color:'#39ff67',
-  //             lineWidth:1,
-  //             states:{
-  //                 hover:{
-  //                     lineWidth:1
-  //                 }
-  //             },
-  //             type: 'line',
-  //             yAxis: 1,
-  //             tooltip: {
-  //                 valueSuffix: ' dBuV'
-  //             },
-  //             data: maxdp
-  //         }, {
-  //             name: '超出门限次数',
-  //             color:'#ff553c',
-  //             lineWidth:1,
-  //             states:{
-  //                 hover:{
-  //                     lineWidth:1
-  //                 }
-  //             },
-  //             type: 'line',
-  //             yAxis: 2,
-  //             data: overOccuThreshold
-  //         }]
-  //     });
-  // }
 };
 export default wirelessCharts;
