@@ -7,43 +7,87 @@
     </div>
     <dl>
       <dt>样例</dt>
-      <div id="chart"></div>
+      <div class="header-box">
+        <div class="index">序号</div>
+        <div class="score">数值</div>
+      </div>
+      <RecycleScroller
+        class="scroller"
+        :items="list"
+        :item-size="32"
+        key-field="index"
+        v-slot="{ item }"
+      >
+        <div class="item-box">
+          <div class="index">{{ item.index }}</div>
+          <div class="score">{{ item.score }}</div>
+        </div>
+      </RecycleScroller>
       <dt>核心代码</dt>
       <dd>
         <pre>
           <code class="javascript hljs">
-    initChart() {
-      this.chart = WirelessCharts.fscanChart();
-      //新版highcharts会保留初始x轴坐标的范围
-      this.chart.series[0].setData([]);
-      setInterval(()=> {
-        let dataList = [];
-        for (let i = 88; i &lt;= 108; i = i + 0.025) {
-          let item = [];
-          item.push(Number(i.toFixed(3)));
-          item.push(Number((Math.pow(Math.random(), 2) * 120 - 20).toFixed(3)));
-          dataList.push(item);
-        }
-        this.chart.series[0].setData(dataList);
-      }, 1000);
-    }
+            import { RecycleScroller } from "vue-virtual-scroller";
+            import "vue-virtual-scroller/dist/vue-virtual-scroller.css";
           </code>
         </pre>
+      </dd>
+      <dt>注意事项</dt>
+      <dd>
+        <p>安装：npm install --save vue-virtual-scroller</p>
+        <p>
+          浏览器对DOM元素有大小限制，这意味着当前虚拟滚动器最多只能显示约50万个项目，具体取决于浏览器。
+        </p>
       </dd>
     </dl>
   </div>
 </template>
 
 <script>
+import { RecycleScroller } from "vue-virtual-scroller";
+import "vue-virtual-scroller/dist/vue-virtual-scroller.css";
 export default {
   data() {
-    return {};
+    return {
+      list: []
+    };
   },
 
-  components: {},
-
+  components: { RecycleScroller },
+  created() {
+    for (let i = 1; i <= 100000; i++) {
+      let item = {
+        index: i,
+        score: parseInt(Math.random() * 100)
+      };
+      this.list.push(item);
+    }
+  },
   methods: {}
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.scroller {
+  height: 210px;
+}
+.header-box {
+  padding-right: 17px;
+  background: #eee;
+}
+.item-box,
+.header-box {
+  display: flex;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+  .index {
+    flex: 1;
+  }
+  .score {
+    flex: 2;
+  }
+}
+</style>

@@ -13,13 +13,15 @@ import LeafletZoom from "@/views/leaflet/zoom.vue";
 import LeafletHeatmap from "@/views/leaflet/heatmap.vue";
 import LeafletDraw from "@/views/leaflet/draw.vue";
 
+import Wireless from "@/views/wireless";
 import WirelessFscan from "@/views/wireless/fscan.vue";
 import WirelessSingle from "@/views/wireless/single.vue";
 import WirelessFalls from "@/views/wireless/falls.vue";
 import WirelessOfficial from "@/views/wireless/official.vue";
 import WirelessYsLine from "@/views/wireless/YsLine.vue";
 
-import Wireless from "@/views/wireless";
+import Special from "@/views/special";
+import SpecialBigtable from "@/views/special/bigTable.vue";
 Vue.use(VueRouter);
 const routes = [
   {
@@ -125,6 +127,20 @@ const routes = [
             component: WirelessYsLine,
             name: "/wireless/YsLine",
             meta: { title: "多y轴折线图" }
+          }
+        ]
+      },
+      {
+        path: "/special",
+        component: Special,
+        name: "/special",
+        redirect: "/special/bigtable",
+        children: [
+          {
+            path: "/special/bigtable",
+            component: SpecialBigtable,
+            name: "/special/bigtable",
+            meta: { title: "大数据表格" }
           }
         ]
       }
