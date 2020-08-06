@@ -12,8 +12,35 @@
       <dd>
         <pre>
           <code class="javascript hljs">
-      L.circle([39.8,98.27], {radius: 15000,stroke:false,fillOpacity:0.4,fillColor:"#979cfc"}).addTo(this.map);
-      L.circleMarker([39.8,98.67], {radius: 100,stroke:false,fillOpacity:0.4,fillColor:"#97fcd5"}).addTo(this.map);
+    createPolyLine() {
+      this.overLayers.routeLayer = L.layerGroup();
+      this.overLayers.carLayer = L.layerGroup();
+      this.map.addLayer(this.overLayers.routeLayer);
+      this.map.addLayer(this.overLayers.carLayer);
+      const pointIcon = L.icon({
+        iconUrl: require("../../assets/img/map/carPoint.png"),
+        iconSize: [26, 14]
+      });
+      this.map.setZoom(14);
+      this.updatePolyLine(this.routeArray, pointIcon);
+      setInterval(() => {
+        var n = this.routeArray.length - 1;
+        var temp = [];
+        temp.push(this.routeArray[n][0] + 0.001);
+        temp.push(this.routeArray[n][1] + 0.001);
+        this.routeArray.push(temp);
+        this.updatePolyLine(this.routeArray, pointIcon);
+      }, 1000);
+    }
+
+    updatePolyLine(lineArr, pointIcon) {
+      this.overLayers.routeLayer.clearLayers();
+      this.overLayers.carLayer.clearLayers();
+      var last = lineArr[lineArr.length - 1];
+      this.map.panTo(last);
+      L.polyline(lineArr, { color: "blue" }).addTo(this.overLayers.routeLayer);
+      L.marker(last, { icon: pointIcon }).addTo(this.overLayers.carLayer);
+    }    
           </code>
         </pre>
       </dd>

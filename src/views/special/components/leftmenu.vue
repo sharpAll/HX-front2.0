@@ -5,6 +5,9 @@
         <router-link active-class="crt" tag="li" to="/special/bigtable">
           <a>大数据表格</a>
         </router-link>
+        <router-link active-class="crt" tag="li" to="/special/print">
+          <a>分页打印</a>
+        </router-link>
       </ul>
     </div>
   </div>

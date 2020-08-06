@@ -22,6 +22,7 @@ import WirelessYsLine from "@/views/wireless/YsLine.vue";
 
 import Special from "@/views/special";
 import SpecialBigtable from "@/views/special/bigTable.vue";
+import SpecialPrint from "@/views/special/print.vue";
 Vue.use(VueRouter);
 const routes = [
   {
@@ -141,6 +142,12 @@ const routes = [
             component: SpecialBigtable,
             name: "/special/bigtable",
             meta: { title: "大数据表格" }
+          },
+          {
+            path: "/special/print",
+            component: SpecialPrint,
+            name: "/special/print",
+            meta: { title: "分页打印" }
           }
         ]
       }
