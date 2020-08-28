@@ -11,6 +11,9 @@
         <router-link to="/special" active-class="crt" tag="li"
           ><a>special</a><i></i
         ></router-link>
+        <router-link to="/threejs" active-class="crt" tag="li"
+          ><a>threejs</a><i></i
+        ></router-link>
       </ul>
     </div>
   </div>

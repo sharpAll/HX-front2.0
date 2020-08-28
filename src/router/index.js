@@ -23,6 +23,12 @@ import WirelessYsLine from "@/views/wireless/YsLine.vue";
 import Special from "@/views/special";
 import SpecialBigtable from "@/views/special/bigTable.vue";
 import SpecialPrint from "@/views/special/print.vue";
+
+import Threejs from "@/views/threejs";
+import ThreejsSimple from "@/views/threejs/simple.vue";
+import ThreejsDae from "@/views/threejs/dae.vue";
+import ThreejsClick from "@/views/threejs/click.vue";
+import ThreejsHover from "@/views/threejs/hover.vue";
 Vue.use(VueRouter);
 const routes = [
   {
@@ -148,6 +154,38 @@ const routes = [
             component: SpecialPrint,
             name: "/special/print",
             meta: { title: "分页打印" }
+          }
+        ]
+      },
+      {
+        path: "/threejs",
+        component: Threejs,
+        name: "/threejs",
+        redirect: "/threejs/simple",
+        children: [
+          {
+            path: "/threejs/simple",
+            component: ThreejsSimple,
+            name: "/threejs/simple",
+            meta: { title: "简单几何体" }
+          },
+          {
+            path: "/threejs/dae",
+            component: ThreejsDae,
+            name: "/threejs/dae",
+            meta: { title: "加载dae模型" }
+          },
+          {
+            path: "/threejs/click",
+            component: ThreejsClick,
+            name: "/threejs/click",
+            meta: { title: "元素点击" }
+          },
+          {
+            path: "/threejs/hover",
+            component: ThreejsHover,
+            name: "/threejs/hover",
+            meta: { title: "鼠标悬浮" }
           }
         ]
       }
