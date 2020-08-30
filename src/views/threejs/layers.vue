@@ -1,47 +1,54 @@
 <template>
   <div>
-    <h2 class="u-ttb2">元素点击</h2>
+    <h2 class="u-ttb2">分组管理</h2>
     <div class="u-line">
       <span class="linea"></span>
       <span class="lineb"></span>
     </div>
     <dl>
       <dt>样例</dt>
+      <input
+        type="checkbox"
+        id="1"
+        :value="1"
+        v-model="typeGamera"
+        @change="switchGamera"
+      />
+      <label for="1">type1</label>
+      <input
+        type="checkbox"
+        id="2"
+        :value="2"
+        v-model="typeGamera"
+        @change="switchGamera"
+      />
+      <label for="2">type2</label>
       <div class="three-box" id="three-container"></div>
       <dt>核心代码</dt>
       <dd>
         <pre>
           <code class="javascript hljs">
-    onCanvasClick(e) {
-      //发出射线 this.container.getBoundingClientRect().left=>canvas相对屏幕的偏移
-      //this.container.offsetWidth=>canvas的宽度、包含border
-      this.mouse.x =
-        ((e.clientX - this.container.getBoundingClientRect().left) /
-          this.container.offsetWidth) *
-          2 -
-        1;
-      this.mouse.y =
-        -(
-          (e.clientY - this.container.getBoundingClientRect().top) /
-          this.container.offsetHeight
-        ) *
-          2 +
-        1;
-      var raycaster = new THREE.Raycaster();
-      raycaster.setFromCamera(this.mouse, this.camera);
-      var cameraIntersects = raycaster.intersectObjects(
-        this.camera_label.children,
-        true
-      );
-      if (cameraIntersects.length > 0) {
-        const res = cameraIntersects.filter(res => {
-          return res && res.object;
-        })[0];
-        if (res && res.object) {
-          alert(`id:${res.object.data.id} name:${res.object.data.name}`);
-        }
+      //开启图层管理(0为默认图层，通常含有底图)
+      this.camera.layers.enable(1);
+      this.camera.layers.enable(2);
+      
+      createCamera(data, posX, posY, posZ, texture, layerIndex) {
+          var spriteMaterial = new THREE.SpriteMaterial({
+            map: texture
+          });
+          var sprite = new THREE.Sprite(spriteMaterial);
+          sprite.position.set(posX, posY + 20, posZ);
+          sprite.scale.set(20, 20, 20);
+          sprite.data = data;
+          sprite.layers.set(layerIndex);
+          this.camera_label_group.add(sprite);
+      },
+
+      //切换分组
+      switchGamera(e) {
+        this.camera.layers.toggle(parseInt(e.target.value))
+        this.render();
       }
-    }
           </code>
         </pre>
       </dd>
@@ -75,7 +82,8 @@ export default {
           require("../../assets/img/3d/camera2.png")
         )
       },
-      camera_label: new THREE.Object3D()
+      camera_label_group: new THREE.Object3D(),
+      typeGamera: [1, 2]
     };
   },
   mounted() {
@@ -83,8 +91,6 @@ export default {
       hljs.highlightBlock(block);
     });
     this.init();
-    this.container.addEventListener("click", this.onCanvasClick, false);
-    this.container.addEventListener("mousemove", this.onMouseMove, false);
   },
   components: {},
 
@@ -120,6 +126,9 @@ export default {
         10000
       );
       this.camera.position.set(500, 600, -1000);
+      //开启图层管理(0为默认图层，通常含有底图)
+      this.camera.layers.enable(1);
+      this.camera.layers.enable(2);
       /**
        * 光源设置（没有会变黑）
        */
@@ -161,50 +170,58 @@ export default {
       envMap.format = THREE.RGBFormat;
       return envMap;
     },
-    onCanvasClick(e) {
-      //发出射线 this.container.getBoundingClientRect().left=>canvas相对屏幕的偏移
-      //this.container.offsetWidth=>canvas的宽度、包含border
-      this.mouse.x =
-        ((e.clientX - this.container.getBoundingClientRect().left) /
-          this.container.offsetWidth) *
-          2 -
-        1;
-      this.mouse.y =
-        -(
-          (e.clientY - this.container.getBoundingClientRect().top) /
-          this.container.offsetHeight
-        ) *
-          2 +
-        1;
-      var raycaster = new THREE.Raycaster();
-      raycaster.setFromCamera(this.mouse, this.camera);
-      var cameraIntersects = raycaster.intersectObjects(
-        this.camera_label.children,
-        true
-      );
-      if (cameraIntersects.length > 0) {
-        const res = cameraIntersects.filter(res => {
-          return res && res.object;
-        })[0];
-        if (res && res.object) {
-          alert(`id:${res.object.data.id} name:${res.object.data.name}`);
-        }
-      }
-    },
     loadCamera() {
-      var data, x, y, z, type;
-      data = {
-        name: "test1",
-        id: 1
-      };
-      x = parseInt(4);
-      y = parseInt(1);
-      z = parseInt(-4);
-      type = "camera_2";
-      this.createCamera(data, x, y, z, this.camTexture[type]);
-      this.scene.add(this.camera_label);
+      this.createCamera(
+        { name: "test1", type: "camera_1" },
+        4,
+        1,
+        -4,
+        this.camTexture["camera_1"],
+        1
+      );
+      this.createCamera(
+        { name: "test2", type: "camera_1" },
+        40,
+        1,
+        -4,
+        this.camTexture["camera_1"],
+        1
+      );
+      this.createCamera(
+        { name: "test3", type: "camera_1" },
+        80,
+        1,
+        -4,
+        this.camTexture["camera_1"],
+        1
+      );
+      this.createCamera(
+        { name: "test4", type: "camera_2" },
+        4,
+        1,
+        40,
+        this.camTexture["camera_2"],
+        2
+      );
+      this.createCamera(
+        { name: "test5", type: "camera_2" },
+        40,
+        1,
+        40,
+        this.camTexture["camera_2"],
+        2
+      );
+      this.createCamera(
+        { name: "test6", type: "camera_2" },
+        80,
+        1,
+        40,
+        this.camTexture["camera_2"],
+        2
+      );
+      this.scene.add(this.camera_label_group);
     },
-    createCamera(data, posX, posY, posZ, texture) {
+    createCamera(data, posX, posY, posZ, texture, layerIndex) {
       var spriteMaterial = new THREE.SpriteMaterial({
         map: texture
       });
@@ -212,37 +229,13 @@ export default {
       sprite.position.set(posX, posY + 20, posZ);
       sprite.scale.set(20, 20, 20);
       sprite.data = data;
-      this.camera_label.add(sprite);
+      sprite.layers.set(layerIndex);
+      this.camera_label_group.add(sprite);
     },
-    onMouseMove(e) {
-      this.mouse.x =
-        ((e.clientX - this.container.getBoundingClientRect().left) /
-          this.container.offsetWidth) *
-          2 -
-        1;
-      this.mouse.y =
-        -(
-          (e.clientY - this.container.getBoundingClientRect().top) /
-          this.container.offsetHeight
-        ) *
-          2 +
-        1;
-      var raycaster = new THREE.Raycaster();
-      raycaster.setFromCamera(this.mouse, this.camera);
-      var cameraIntersects = raycaster.intersectObjects(
-        this.camera_label.children,
-        true
-      );
-      if (cameraIntersects.length > 0) {
-        const res = cameraIntersects.filter(res => {
-          return res && res.object;
-        })[0];
-        if (res && res.object) {
-          this.container.style.cursor = "pointer";
-        }
-      } else {
-        this.container.style.cursor = "auto";
-      }
+    //切换分组
+    switchGamera(e) {
+      this.camera.layers.toggle(parseInt(e.target.value));
+      this.render();
     }
   }
 };

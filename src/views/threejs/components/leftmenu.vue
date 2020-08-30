@@ -14,6 +14,9 @@
         <router-link active-class="crt" tag="li" to="/threejs/hover">
           <a>元素悬浮</a>
         </router-link>
+        <router-link active-class="crt" tag="li" to="/threejs/layers">
+          <a>分组管理</a>
+        </router-link>
       </ul>
     </div>
   </div>

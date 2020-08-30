@@ -29,6 +29,7 @@ import ThreejsSimple from "@/views/threejs/simple.vue";
 import ThreejsDae from "@/views/threejs/dae.vue";
 import ThreejsClick from "@/views/threejs/click.vue";
 import ThreejsHover from "@/views/threejs/hover.vue";
+import ThreejsLayers from "@/views/threejs/layers.vue";
 Vue.use(VueRouter);
 const routes = [
   {
@@ -186,6 +187,12 @@ const routes = [
             component: ThreejsHover,
             name: "/threejs/hover",
             meta: { title: "鼠标悬浮" }
+          },
+          {
+            path: "/threejs/layers",
+            component: ThreejsLayers,
+            name: "/threejs/layers",
+            meta: { title: "分组管理" }
           }
         ]
       }
