@@ -57,7 +57,7 @@ export default {
       renderer: null,
       mesh: null,
       controls: null,
-      housePos: [0, 0, 0], //模型位置
+      housePos: [-230, 0, 80], //模型位置
       envURL: `${process.env.BASE_URL}3d/skybox/` //环境盒子
     };
   },
@@ -100,13 +100,15 @@ export default {
         0.1,
         10000
       );
-      this.camera.position.set(500, 600, -1000);
+      this.camera.position.set(0, 1000, -1200);
+      // 辅助坐标系
+      this.scene.add(new THREE.AxesHelper(2000));
       /**
        * 光源设置（没有会变黑）
        */
-      var directionalLight = new THREE.DirectionalLight(0xffffff, 1); //正面光照
-      directionalLight.position.set(500, 500, -500);
-      this.scene.add(directionalLight);
+      var ambientLight = new THREE.AmbientLight(0xaaaaaa, 1); //环境光
+      // directionalLight.position.set(500, 500, -500);
+      this.scene.add(ambientLight);
 
       /**
        * 创建渲染器对象
