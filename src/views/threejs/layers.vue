@@ -14,7 +14,7 @@
         v-model="typeGamera"
         @change="switchGamera"
       />
-      <label for="1">type1</label>
+      <label for="1">camera_1</label>
       <input
         type="checkbox"
         id="2"
@@ -22,7 +22,7 @@
         v-model="typeGamera"
         @change="switchGamera"
       />
-      <label for="2">type2</label>
+      <label for="2">camera_2</label>
       <div class="three-box" id="three-container"></div>
       <dt>核心代码</dt>
       <dd>
@@ -51,6 +51,15 @@
       }
           </code>
         </pre>
+      </dd>
+      <dt>注意事项</dt>
+      <dd>
+        <p>
+          Raycaster.layers.mask的默认值为0，只对this.camera.layers为0中的元素有效。
+        </p>
+        <p>
+          分组模型中需要添加：raycaster.layers.mask = this.camera.layers.mask
+        </p>
       </dd>
     </dl>
   </div>
@@ -91,6 +100,8 @@ export default {
       hljs.highlightBlock(block);
     });
     this.init();
+    this.container.addEventListener("click", this.onCanvasClick, false);
+    this.container.addEventListener("mousemove", this.onMouseMove, false);
   },
   components: {},
 
@@ -236,6 +247,69 @@ export default {
     switchGamera(e) {
       this.camera.layers.toggle(parseInt(e.target.value));
       this.render();
+    },
+    onMouseMove(e) {
+      this.mouse.x =
+        ((e.clientX - this.container.getBoundingClientRect().left) /
+          this.container.offsetWidth) *
+          2 -
+        1;
+      this.mouse.y =
+        -(
+          (e.clientY - this.container.getBoundingClientRect().top) /
+          this.container.offsetHeight
+        ) *
+          2 +
+        1;
+      var raycaster = new THREE.Raycaster();
+      raycaster.layers.mask = this.camera.layers.mask;
+      raycaster.setFromCamera(this.mouse, this.camera);
+      var cameraIntersects = raycaster.intersectObjects(
+        this.camera_label_group.children,
+        true
+      );
+      console.log(cameraIntersects);
+      if (cameraIntersects.length > 0) {
+        const res = cameraIntersects.filter(res => {
+          return res && res.object;
+        })[0];
+        if (res && res.object) {
+          this.container.style.cursor = "pointer";
+        }
+      } else {
+        this.container.style.cursor = "auto";
+      }
+    },
+    onCanvasClick(e) {
+      //发出射线 this.container.getBoundingClientRect().left=>canvas相对屏幕的偏移
+      //this.container.offsetWidth=>canvas的宽度、包含border
+      this.mouse.x =
+        ((e.clientX - this.container.getBoundingClientRect().left) /
+          this.container.offsetWidth) *
+          2 -
+        1;
+      this.mouse.y =
+        -(
+          (e.clientY - this.container.getBoundingClientRect().top) /
+          this.container.offsetHeight
+        ) *
+          2 +
+        1;
+      var raycaster = new THREE.Raycaster();
+      raycaster.layers.mask = this.camera.layers.mask;
+      raycaster.setFromCamera(this.mouse, this.camera);
+      var cameraIntersects = raycaster.intersectObjects(
+        this.camera_label_group.children,
+        true
+      );
+      if (cameraIntersects.length > 0) {
+        const res = cameraIntersects.filter(res => {
+          return res && res.object;
+        })[0];
+        if (res && res.object) {
+          alert(`type:${res.object.data.type} name:${res.object.data.name}`);
+        }
+      }
     }
   }
 };

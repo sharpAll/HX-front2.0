@@ -45,6 +45,22 @@
           </code>
         </pre>
       </dd>
+      <dt>注意事项</dt>
+      <dd>
+        <p>
+          官方示例中this.mouse的配置基本是基于全屏的，当非全屏时需要使用另外的公式计算。
+        </p>
+        <p>
+          this.mouse.x =((e.clientX -
+          this.container.getBoundingClientRect().left) /
+          this.container.offsetWidth) *2 -1;
+        </p>
+        <p>
+          this.mouse.y =-((e.clientY -
+          this.container.getBoundingClientRect().top) /
+          this.container.offsetHeight) *2 +1;
+        </p>
+      </dd>
     </dl>
   </div>
 </template>
