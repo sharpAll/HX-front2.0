@@ -1,4 +1,5 @@
 module.exports = {
+  outputDir: "HX-front2.0",
   devServer: {
     port: 8080,
     host: "localhost",
