@@ -8,6 +8,9 @@
         <router-link active-class="crt" tag="li" to="/special/print">
           <a>分页打印</a>
         </router-link>
+        <router-link active-class="crt" tag="li" to="/special/validator">
+          <a>字段校验</a>
+        </router-link>
       </ul>
     </div>
   </div>

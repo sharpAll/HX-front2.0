@@ -23,6 +23,7 @@ import WirelessYsLine from "@/views/wireless/YsLine.vue";
 import Special from "@/views/special";
 import SpecialBigtable from "@/views/special/bigTable.vue";
 import SpecialPrint from "@/views/special/print.vue";
+import SpecialValidator from "@/views/special/validator.vue";
 
 import Threejs from "@/views/threejs";
 import ThreejsSimple from "@/views/threejs/simple.vue";
@@ -155,6 +156,12 @@ const routes = [
             component: SpecialPrint,
             name: "/special/print",
             meta: { title: "分页打印" }
+          },
+          {
+            path: "/special/validator",
+            component: SpecialValidator,
+            name: "/special/validator",
+            meta: { title: "字段校验" }
           }
         ]
       },
