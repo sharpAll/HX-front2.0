@@ -105,7 +105,7 @@ export default {
       /**
        * 光源设置（没有会变黑）
        */
-      var ambientLight = new THREE.AmbientLight(0xaaaaaa, 1); //环境光
+      var ambientLight = new THREE.AmbientLight(0xffffff, 1); //环境光
       // directionalLight.position.set(500, 500, -500);
       this.scene.add(ambientLight);
 

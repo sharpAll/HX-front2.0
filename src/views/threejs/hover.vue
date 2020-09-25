@@ -158,9 +158,9 @@ export default {
       /**
        * 光源设置（没有会变黑）
        */
-      var directionalLight = new THREE.DirectionalLight(0xffffff, 1); //正面光照
-      directionalLight.position.set(500, 500, -500);
-      this.scene.add(directionalLight);
+      var ambientLight = new THREE.AmbientLight(0xffffff, 1); //环境光
+      // directionalLight.position.set(500, 500, -500);
+      this.scene.add(ambientLight);
 
       /**
        * 创建渲染器对象
