@@ -12,7 +12,7 @@
     "core-js": "^3.6.5",
     "date-format": "^3.0.0",
     "highcharts": "^8.1.2",
-    "highlight.js": "^10.1.1",
+    "highlight.js": "^10.1.2",
     "leaflet": "^1.6.0",
     "leaflet-draw": "^1.0.4",
     "leaflet.heat": "^0.2.0",
