@@ -17,6 +17,9 @@
         <router-link active-class="crt" tag="li" to="/wireless/YsLine">
           <a>多y轴折线图</a>
         </router-link>
+        <router-link active-class="crt" tag="li" to="/wireless/divide">
+          <a>频率划分图</a>
+        </router-link>
       </ul>
     </div>
   </div>

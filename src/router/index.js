@@ -19,6 +19,7 @@ import WirelessSingle from "@/views/wireless/single.vue";
 import WirelessFalls from "@/views/wireless/falls.vue";
 import WirelessOfficial from "@/views/wireless/official.vue";
 import WirelessYsLine from "@/views/wireless/YsLine.vue";
+import WirelessDivide from "@/views/wireless/divide.vue";
 
 import Special from "@/views/special";
 import SpecialBigtable from "@/views/special/bigTable.vue";
@@ -137,6 +138,12 @@ const routes = [
             component: WirelessYsLine,
             name: "/wireless/YsLine",
             meta: { title: "多y轴折线图" }
+          },
+          {
+            path: "/wireless/divide",
+            component: WirelessDivide,
+            name: "/wireless/divide",
+            meta: { title: "频率划分图" }
           }
         ]
       },
