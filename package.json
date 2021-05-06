@@ -13,7 +13,7 @@
     "d3": "^6.5.0",
     "date-format": "^3.0.0",
     "element-ui": "^2.15.0",
-    "highcharts": "^8.1.2",
+    "highcharts": "^9.0.0",
     "highlight.js": "^10.1.1",
     "leaflet": "^1.6.0",
     "leaflet-draw": "^1.0.4",
